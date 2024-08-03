@@ -1,0 +1,111 @@
+﻿@model TaskManagementSystem.Models.Task
+
+@{
+    ViewData["Title"] = "EnterTask";
+}
+
+<h4>Enter Task</h4>
+<hr />
+
+<div class="container">
+    <form asp-action="EnterTask">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="clients" class="control-label">Customer</label>
+                    <select id="clients" class="form-control">
+                        <option value="">-- Select Customer --</option>
+                        @if (ViewBag.Client != null)
+                        {
+                            @foreach (var client in @ViewBag.Client)
+                            {
+                                <option value="@client.ClientID">@client.ClientName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="projects" class="control-label">Project</label>
+                    <select id="projects" class="form-control">
+                        <option value="">-- Select Project --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="DataBaseID" class="control-label"></label>
+                    <select asp-for="DataBaseID" id="database" class="form-control">
+                        <option value="">-- Select Data Base --</option>
+                    </select>
+                    <span asp-validation-for="DataBaseID" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="CategoryID" class="control-label"></label>
+                    <select asp-for="CategoryID" class="form-control">
+                        <option value="">-- Select Category --</option>
+                        @if (ViewBag.Category != null)
+                        {
+                            @foreach (var category in @ViewBag.Category)
+                            {
+                                <option value="@category.CategoryID">@category.CategoryName</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="CategoryID" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="TaskTitle" class="control-label"></label>
+                    <input asp-for="TaskTitle" class="form-control" />
+                    <span asp-validation-for="TaskTitle" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="TaskDescription" class="control-label"></label>
+                    <textarea asp-for="TaskDescription" class="form-control" style="max-height:100px"></textarea>
+                    <span asp-validation-for="TaskDescription" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="AssignedBy" class="control-label"></label>
+                    <input asp-for="AssignedBy" class="form-control" />
+                    <span asp-validation-for="AssignedBy" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

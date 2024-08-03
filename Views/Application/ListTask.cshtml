@@ -1,0 +1,43 @@
+﻿@model IEnumerable<TaskManagementSystem.Models.Task>
+
+@{
+    ViewData["Title"] = "ListTask";
+}
+
+<h1>ListTask</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskTitle)
+            </th>
+            <th>
+                Action
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskTitle)
+            </td>
+            <td>
+                    @Html.ActionLink("Add Notes", "AddingTaskNotes", new { id = item.TaskID })
+                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

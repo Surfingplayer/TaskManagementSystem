@@ -1,0 +1,154 @@
+﻿@model TaskManagementSystem.Models.Notes
+
+@{
+    ViewData["Title"] = "AddingTaskNotes";
+}
+
+<h1>AddingTaskNotes</h1>
+
+<h4>Notes</h4>
+<hr />
+<table style="width: 100%; height: 60vh; border-collapse: collapse;">
+    <tr>
+        
+        <td style="width: 30%; height: 100%; padding: 10px; border: 1px solid #ddd; background-color: #f8f9fa;">
+            <div style="height: 30%; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+
+                @if (ViewBag.taskInfo != null)
+                {
+                    var taskInfoList = ViewBag.taskInfo as List<TaskManagementSystem.ViewModel.TaskInfoViewModel>;
+                    var firstTaskNote = taskInfoList.First();
+                    <ul class="list-group">
+
+                        <li class="list-group-item">
+                            <strong>TaskTitle:</strong> @firstTaskNote.task.TaskTitle<br />
+                            <strong>TaskDescription:</strong> @firstTaskNote.task.TaskDescription <br />
+                            <strong>AssignedBy:</strong> @firstTaskNote.task.AssignedBy.<br />
+
+                        </li>
+
+                    </ul>
+                }
+                else
+                {
+                    <p>No task information available.</p>
+                }
+
+            </div>
+            <br />
+            <div style="height: 70%; padding-top: 10px;">
+
+                <div class="row">
+                    <div class="col-12">
+                        <form asp-action="AddingTaskNotes">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                             
+                                <input asp-for="NotesId" hidden class="form-control" />
+                                <span asp-validation-for="NotesId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                              
+                                <input asp-for="TaskId" hidden class="form-control" />
+                                <span asp-validation-for="TaskId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                              
+                                <input asp-for="EmpID" hidden class="form-control" />
+                                <span asp-validation-for="EmpID" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TaskNotes" class="control-label"></label>
+                                <textarea asp-for="TaskNotes" class="form-control"></textarea>
+                                <span asp-validation-for="TaskNotes" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="WorkHours" class="control-label"></label>
+                                <input asp-for="WorkHours" class="form-control" />
+                                <span asp-validation-for="WorkHours" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </td>
+
+       
+        <td style="width: 70%; height: 100%; padding: 10px; border: 1px solid #ddd; background-color: #e9ecef;">
+            <table style="width: 100%; height: 100%;">
+                <thead>
+                <th style="width: 30%;">
+                    Employee Name
+                </th>
+                <th style="width: 50%;">
+                    Note
+                </th>
+                <th style="width: 20%;">
+                    Work Hours
+                </th>
+                </thead>
+                <tbody>
+                    @if (ViewBag.taskInfo != null)
+                    {
+
+
+                        var taskInfoList = ViewBag.taskInfo as List<TaskManagementSystem.ViewModel.TaskInfoViewModel>;
+                        var firstTaskNote = taskInfoList.FirstOrDefault();
+                      
+                        if (firstTaskNote.NotesId != 0)
+                        {
+                            @foreach (var notes in ViewBag.taskInfo as List<TaskManagementSystem.ViewModel.TaskInfoViewModel>)
+                            {
+                                <tr>
+                                    <td>
+                                        @notes.Employee.EmpName
+                                    </td>
+                                    <td>
+                                        @notes.Notes
+                                    </td>
+                                    <td>
+                                        @notes.WorkHours
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    <p>No task notes available.</p>
+                                </td>
+
+                            </tr>
+
+                        }
+
+                    }
+                    else
+                    {
+                        <p>Error</p>
+                    }
+                </tbody>
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+
+
+
+
+<div>
+    <a asp-action="ListTask">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
